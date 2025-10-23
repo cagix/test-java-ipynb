@@ -4,5 +4,5 @@ channels:
 dependencies:
   - python=3.11
   - jupyterlab
-  - openjdk=25
+#  - openjdk=25
   - maven
