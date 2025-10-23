@@ -2,7 +2,8 @@ name: java-ijava
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python
   - jupyterlab
-#  - openjdk=25
+  - openjdk
   - maven
+  - ijava
