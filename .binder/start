@@ -6,6 +6,3 @@ if \[ -d "${HOME}/.local/jdk/current" \]; then
   export JAVA_HOME="${HOME}/.local/jdk/current"
   export PATH="${JAVA_HOME}/bin:${PATH}"
 fi
-
-# Jupyter starten (Binder/JupyterHub kümmert sich um Token/URL)
-exec jupyter lab --ip=0.0.0.0 --no-browser
