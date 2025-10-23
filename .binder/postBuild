@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+# 1) Temurin JDK 25 installieren (neueste GA, Linux x64)
+curl -L -o /tmp/jdk.tar.gz "https://api.adoptium.net/v3/binary/latest/25/ga/linux/x64/jdk/hotspot/normal/eclipse"
+mkdir -p /opt/jdk
+tar -C /opt/jdk -xzf /tmp/jdk.tar.gz
+JDK_DIR=$(ls -d /opt/jdk/* | head -n1)
+update-alternatives --install /usr/bin/java  java  "${JDK_DIR}/bin/java"  1
+update-alternatives --install /usr/bin/javac javac "${JDK_DIR}/bin/javac" 1
+echo "export JAVA_HOME=${JDK_DIR}"       >> /etc/profile.d/java.sh
+echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile.d/java.sh
+
+# 2) IJava-Kernel installieren
+IJAVA_VERSION=1.3.0
+curl -L -o /tmp/ijava.zip "https://github.com/SpencerPark/IJava/releases/download/v${IJAVA_VERSION}/ijava-${IJAVA_VERSION}.zip"
+unzip -q /tmp/ijava.zip -d /tmp/ijava
+python3 /tmp/ijava/install.py --sys-prefix
+
+# 3) Sanity-Check (wird im Binder-Log sichtbar)
+java -version
+jupyter kernelspec list
